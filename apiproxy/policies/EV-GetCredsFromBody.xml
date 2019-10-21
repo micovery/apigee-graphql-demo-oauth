@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="EV-GetCredsFromBody">
+    <DisplayName>EV-GetCredsFromBody</DisplayName>
+    <FormParam name="client_id">
+        <Pattern>{client_id}</Pattern>
+    </FormParam>
+    <FormParam name="client_secret">
+        <Pattern>{client_id}</Pattern>
+    </FormParam>
+    <Variable name="grant_type">
+        <Pattern>{request.queryparam.grant_type}</Pattern>
+    </Variable>
+    <Variable name="request.formparam.scope">
+        <Pattern>{request.queryparam.scope}</Pattern>
+    </Variable>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    <Source clearPayload="false">request</Source>
+</ExtractVariables>

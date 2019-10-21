@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description/>
+    <FaultRules/>
+    <DefaultFaultRule name="default-fault">
+        <Step>
+            <Name>AM-AddCORS</Name>
+        </Step>
+    </DefaultFaultRule>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>EV-GetGrantType</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response>
+            <Step>
+                <Name>AM-AddCORS</Name>
+            </Step>
+        </Response>
+    </PostFlow>
+    <Flows>
+        <Flow name="CORS">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-SetupCORSFault</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix ~~ ".*") and (request.verb = "OPTIONS")</Condition>
+        </Flow>
+        <Flow name="client credentials (get)">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>BA-GetCredsFromHeader</Name>
+                </Step>
+                <Step>
+                    <Name>VAK-VerifyAPIKey</Name>
+                </Step>
+                <Step>
+                    <Name>OA-CCTokenGen</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "GET") and (grant_type = "client_credentials") </Condition>
+        </Flow>
+        <Flow name="client credentials (post)">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>EV-GetCredsFromBody</Name>
+                </Step>
+                <Step>
+                    <Name>VAK-VerifyAPIKey</Name>
+                </Step>
+                <Step>
+                    <Name>OA-CCTokenGen</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST") and (grant_type = "client_credentials") and (content_type = "application/x-www-form-urlencoded")</Condition>
+        </Flow>
+        <Flow name="BadGrantType">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadGrantType</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>!(grant_type ~~ "^(client_credentials)$")</Condition>
+        </Flow>
+        <Flow name="BadMethod">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadMethod</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>!(request.verb ~~ "^(POST|GET)$")</Condition>
+        </Flow>
+        <Flow name="BadPath">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadPath</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>!(proxy.pathsuffix ~~ "^\/(token|auth)$")</Condition>
+        </Flow>
+        <Flow name="BadMediaType">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadMediaType</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(request.verb = "POST") and !(content_type = "application/x-www-form-urlencoded")</Condition>
+        </Flow>
+        <Flow name="BadRequest">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>RF-BadRequest</Name>
+                </Step>
+            </Request>
+            <Response/>
+        </Flow>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/graphql-oauth</BasePath>
+        <Properties/>
+        <VirtualHost>default</VirtualHost>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="noroute"/>
+</ProxyEndpoint>

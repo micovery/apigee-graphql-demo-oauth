@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="graphql-oauth">
+    <Basepaths>/graphql-oauth</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1571634407535</CreatedAt>
+    <CreatedBy>miguelmendoza@google.com</CreatedBy>
+    <Description></Description>
+    <DisplayName>graphql-oauth</DisplayName>
+    <LastModifiedAt>1571634582365</LastModifiedAt>
+    <LastModifiedBy>miguelmendoza@google.com</LastModifiedBy>
+    <ManifestVersion>SHA-512:327d2ea30440b2b62cfa74fed8e2842203705eedba1b32341559b1dc73cc06208a8c331a0155a62127c4e2da1a806a3d3002bd3a9d4a4827ea0f8fd31b1509ac</ManifestVersion>
+    <Policies>
+        <Policy>AM-AddCORS</Policy>
+        <Policy>BA-GetCredsFromHeader</Policy>
+        <Policy>EV-GetCredsFromBody</Policy>
+        <Policy>EV-GetGrantType</Policy>
+        <Policy>OA-CCTokenGen</Policy>
+        <Policy>RF-BadGrantType</Policy>
+        <Policy>RF-BadMediaType</Policy>
+        <Policy>RF-BadMethod</Policy>
+        <Policy>RF-BadPath</Policy>
+        <Policy>RF-BadRequest</Policy>
+        <Policy>RF-SetupCORSFault</Policy>
+        <Policy>VAK-VerifyAPIKey</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources/>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints/>
+</APIProxy>

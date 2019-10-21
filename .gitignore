@@ -1,0 +1,6 @@
+manifests
+target
+*iml
+*zip
+.idea
+
