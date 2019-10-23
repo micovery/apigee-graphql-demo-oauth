@@ -16,11 +16,12 @@ to generate OAuth access tokens for client apps. (registered in Apigee Edge).
 To deploy the API proxy and its config assets run the following command:
 
 ```bash
-mvn install -Ptest \
-    -Dtarget_backend=$TARGET_BACKEND_GRAPHQL_SERVER \
-    -Dusername=$APIGEE_USERNAME \
-    -Dpassword=$APIGEE_PASSWORD \
-    -Dorg=$APIGEE_ORG
+    mvn -ntp install \
+        -Ptest \
+        -Dapigee.username=${APIGEE_USERNAME} \
+        -Dapigee.password=${APIGEE_PASSWORD} \
+        -Dapigee.org=${APIGEE_ORG} \
+        -Dapigee.env=${APIGEE_ENV}
 ```
     
 This will deploy the `graphql-oauth` API Proxy to the specified $APIGEE_ORG organization under the `test` environment.
